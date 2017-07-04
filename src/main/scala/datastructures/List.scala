@@ -57,4 +57,27 @@ object  List{
     case Nil => z
     case Cons(x,xs) => f(foldLeft(xs,z)(f),x)
   }
+ def sum3(l:List[Int]):Int = foldLeft(l,0)(_ + _)
+ def product3(l:List[Int]):Int = foldLeft(l,1)(_ * _)
+ def reverser[A](l:List[A]):List[A] = foldRight(l,List[A])((acc,h) =>Cons(h,acc))
+ def appendViaFoldRight[A](l:List[A],r:List[A]):List[A] =
+   foldRight(l,r)(Cons(_,_))
+ def concat[A](l:List[List[A]]) =
+   foldLeft(l,List[A])(append)
+ def add(l:List[Int]):List[Int] =
+   foldLeft(l,Nil:List[Int])((x,h) => Cons(x + 1,h))
+ def doubleToString(l:List[Double]):List[String] =
+   foldLeft(l,Nil:List[String])((x,h) => Cons(x.toString,h))
+ def map[A,B](as:List[A])(f:A => B):List[B] =
+   foldRight(as,Nil:List[A])((h,t) =>Cons(f(h),t))
+ def filter[A](as:List[A])(f: A => Boolean):List[A] =
+   foldRight(as,Nil:List[A])((h,t) => if (f(h)) Cons(h,t) else t )
+ def filter_div1[A](l:List[A])(f: A => Boolean):List[A] =
+  val buf = new collection.mutable.ListBuffer[A]
+  def loop(l:List[A]):Unit = l match {
+    case Nil => ()
+    case Cons(x,xs) => if (f(x)) buf += x; go(xs)
+  }
+ loop(l)
+ List(buf.toList:_*)
 }
