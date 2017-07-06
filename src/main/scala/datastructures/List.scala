@@ -80,4 +80,29 @@ object  List{
   }
  loop(l)
  List(buf.toList:_*)
+  def flatmap[A,B](as:List[A])(f:A => List[B]):List[B] =
+    concat(map(as)(f))
+ def fileter3[A](as:List[A])(f:A => Boolean):List[A] =
+   flatMap(l)(a => if (f(a)) List(a) else Nil)
+  def add_lists(l:List[Int],t:List[Int]):List[Int] = (l,t) match {
+    case (_,Nil) => l
+    case (Nil,_) => t
+    case (Cons(x,xs),Cons(t,ts)) => Cons(x + t,add_lists(xs,ts))
+  }
+  def zipwith[A](l:List[A],t:List[A])(f: (A,A) => A):List[A] = (l,t) match {
+    case (_,Nil) => l
+    case (Nil,_) => t
+    case (Cons(x,xs),Cons(t,ts)) => Cons(f(x,xs),zipwith(xs,ts)(f))
+  }
+  def startsWith[A](l: List[A], prefix: List[A]): Boolean = (l,prefix) match {
+    case (_,Nil) => true
+    case (Cons(h,t),Cons(h2,t2)) if h == h2 => startsWith(t, t2)
+    case _ => false
+  }
+  @annotation.tailrec
+  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = sup match {
+    case Nil => sub == Nil
+    case _ if startsWith(sup, sub) => true
+    case Cons(h,t) => hasSubsequence(t, sub)
+  }
 }
