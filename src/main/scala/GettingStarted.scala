@@ -30,7 +30,7 @@ object MyModule {
     msg.format(name,n,f(n))
   }
 
-  def findFirst(as:Array[String],key:String,p:A => Boolean):Int ={
+  def findFirst(as:Array[String],key:String,p:String => Boolean):Int ={
     @annotation.tailrec
     def loop(n:Int):Int =
       if (n >= as.length) -1
