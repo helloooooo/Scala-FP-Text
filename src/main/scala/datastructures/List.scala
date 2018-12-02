@@ -69,4 +69,23 @@ object  List {
 
   def add1(l:List[Int]):List[Int] =
     foldRight(l,Nil:List[Int])((x,y) => Cons(x+1,y))
+
+  def doubletoString(l:List[Double]):List[String] =
+    foldRight(l,Nil:List[String])((x,y) => Cons(x.toString,y))
+
+  def map[A,B](as:List[A])(f:A => B):List[B] =
+    foldRight(as,Nil:List[B])((x,y) => Cons(f(x),y))
+
+  def filter[A](as:List[A])(f:A => Boolean):List[A] =
+    foldRight(as:List[A],Nil:List[A])((h,t) => if (f(h)) Cons(h,t) else t)
+
+  def flatmap[A,B](as:List[A])(f:A => List[B]):List[B] =
+    concat(map(as)(f))
+
+  def addPair(a:List[Int],b:List[Int]):List[Int] = (a,b) match {
+    case (Nil,_) => Nil
+    case (_,Nil) => Nil
+    case (Cons(h1,t1),Cons(h2,t2)) => Cons(h1+h2,addPair(t1,t2))
+  }
+  
 }
