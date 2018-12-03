@@ -87,5 +87,5 @@ object  List {
     case (_,Nil) => Nil
     case (Cons(h1,t1),Cons(h2,t2)) => Cons(h1+h2,addPair(t1,t2))
   }
-  
+
 }
