@@ -1,2 +1,1 @@
-# Scala-FP-Text
-Scala fuctional programing study
+functinal programing in scala
